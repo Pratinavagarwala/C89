@@ -3,7 +3,7 @@ import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,K
 import firebase from "firebase";
 import db from "../config";
 
-export default class BookRequestScreen extends React.Component{
+export default class BookDonateScreen extends React.Component{
     render(){
         return(
             <View style={styles.container}>
