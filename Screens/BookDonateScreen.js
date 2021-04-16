@@ -1,14 +1,59 @@
 import * as  React from "react" ;
-import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,KeyboardAvoidingView} from "react-native";
+import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,KeyboardAvoidingView,FlatList} from "react-native";
 import firebase from "firebase";
 import db from "../config";
+import {ListItem} from 'react-native-elements';
+import MyHeader from "../Components/MyHeader";
 
 export default class BookDonateScreen extends React.Component{
+    constructor(){
+        super()
+        this.state={
+            requestedBookList:[]
+        }
+        this.requestRef=null
+    }
+    getrequestedBookList=()=>{
+        this.requestRef=db.collection("requestedBooks").onSnapshot((Snapshot)=>{
+            var requestedBookList=Snapshot.docs.map(document=>document.data())
+            this.setState({requestedBookList:requestedBookList})
+        })
+    }
+    componentDidMount(){
+        this.getrequestedBookList()
+    }
+    componentWillUnmount(){
+        this.requestRef()
+    }
+    renderItem=({item,index})=>{
+        return(
+            <ListItem
+                key={index}
+                title={item.bookName}
+                subtitle={item.reasonToRequest}
+                rightElement={
+                    <TouchableOpacity><Text>Donate</Text></TouchableOpacity>
+                }
+                bottomDivider
+            />
+        )
+
+    }
     render(){
         return(
             <View style={styles.container}>
-                <Text>Donate Books to others</Text>
+                <MyHeader/>
+                <Text style={styles.text}>Donate Books with Others</Text>
+                {
+                    this.state.requestedBookList.length===0?(<Text style={styles.text}>Loading..</Text>):(
+                        <FlatList
+                            keyExtractor={(item,index)=>index.toString()}
+                            data={this.state.requestedBookList}
+                            renderItem={this.renderItem}
+                        />
 
+                    )
+                }
             </View>
         )
     }
@@ -16,16 +61,19 @@ export default class BookDonateScreen extends React.Component{
 
 const styles=StyleSheet.create(
     {
-       container:{
-           alignItems:"center",
-           justifyContent:"center",
-           marginTop:100,
-       },
-       text:{
-           fontSize:20,
-           fontWeight:"bold",
+        container:{
            
-       },
+            justifyContent:"center",
+            
+        },
+       text:{
+        fontSize:20,
+        fontWeight:"bold",
+        alignSelf:"center",
+        marginTop:20,
+        marginBottom:20
+        
+    },
        inputBox:{
         alignItems:"center",
         justifyContent:"center",

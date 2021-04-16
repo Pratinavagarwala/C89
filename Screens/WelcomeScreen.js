@@ -173,6 +173,7 @@ export default class WelcomeScreen extends React.Component{
                 <TextInput 
                     style={styles.inputBox}
                     placeholder="Password"
+                    keyboardType="numeric"
                     secureTextEntry={true}
                     onChangeText={(text)=>{
                         this.setState({
@@ -203,32 +204,37 @@ export default class WelcomeScreen extends React.Component{
 const styles=StyleSheet.create(
     {
        container:{
-           alignItems:"center",
+           
+        alignItems:"center",
            justifyContent:"center",
            marginTop:100,
        },
        text:{
-           fontSize:20,
-           fontWeight:"bold",
-           
+        fontSize:20,
+        fontWeight:"bold",
+        justifyContent:"center",
+        textAlign:"center"
+        
+                 
        },
        inputBox:{
         alignItems:"center",
         justifyContent:"center",
-        marginTop:10,
+        alignSelf:"center",
+        marginTop:20,
         padding:10,
         borderWidth:1,
         width:"80%",
-        height:100,
+        height:80,
        },
        button:{
         alignItems:"center",
         justifyContent:"center",
-        marginTop:10,
-        padding:10,
+        alignSelf:"center",
+        marginTop:20,
         borderWidth:1,
-        width:"50%",
-        height:100,
+        width:"60%",
+        height:50,
        }
 
     }

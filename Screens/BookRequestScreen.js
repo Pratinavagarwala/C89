@@ -34,14 +34,14 @@ export default class BookRequestScreen extends React.Component{
         return(
             <View style={styles.container}>
                 <MyHeader/>
-                <Text>Request Books from others</Text>
+                <Text style={styles.text}>Request Books from others</Text>
             <KeyboardAvoidingView>
                 <TextInput placeholder="Book name" style={styles.inputBox} value={this.state.bookName} onChangeText={(text)=>{
                     this.setState({bookName:text})
                 }}/>
 
-                <TextInput placeholder="Reason to request" style={[styles.inputBox,{height:100}]} value={this.state.bookName} onChangeText={(text)=>{
-                    this.setState({bookName:text})
+                <TextInput placeholder="Reason to request" style={[styles.inputBox]} value={this.state.reasonToRequest} onChangeText={(text)=>{
+                    this.setState({reasonToRequest:text})
                 }} multiline/>
                 
                 <TouchableOpacity style={styles.button} onPress={()=>{
@@ -58,23 +58,28 @@ export default class BookRequestScreen extends React.Component{
 const styles=StyleSheet.create(
     {
        container:{
-           alignItems:"center",
+           
            justifyContent:"center",
-           marginTop:100,
+           
        },
        text:{
            fontSize:20,
            fontWeight:"bold",
+           alignSelf:"center",
+           marginTop:20,
+           marginBottom:20
            
        },
        inputBox:{
         alignItems:"center",
         justifyContent:"center",
-        marginTop:10,
-        padding:10,
+        marginTop:20,
+        alignSelf:"center",
         borderWidth:1,
         width:"80%",
-        height:100,
+        fontSize:20,
+        textAlign:"center",
+        padding:10,
        },
        button:{
         alignItems:"center",
@@ -84,6 +89,7 @@ const styles=StyleSheet.create(
         borderWidth:1,
         width:"50%",
         height:100,
+        alignSelf:"center",
        }
 
     }

@@ -5,7 +5,7 @@ const MyHeader=(props)=>{
     return(
         <Header 
             backgroundColor="grey"
-            centerComponent={{text:"Book Santa", style:{color:"white",fontSize:10,fontWeight:"bold"}}}
+            centerComponent={{text:"Book Santa", style:{color:"white",fontSize:30,paddingVertical:20,fontWeight:"bold"}}}
         />
     )
 } 
