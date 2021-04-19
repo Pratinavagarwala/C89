@@ -32,8 +32,10 @@ export default class BookRequestScreen extends React.Component{
     }
     render(){
         return(
-            <View style={styles.container}>
+            <View>
                 <MyHeader/>
+            <View style={styles.container}>
+                
                 <Text style={styles.text}>Request Books from others</Text>
             <KeyboardAvoidingView>
                 <TextInput placeholder="Book name" style={styles.inputBox} value={this.state.bookName} onChangeText={(text)=>{
@@ -51,6 +53,7 @@ export default class BookRequestScreen extends React.Component{
                 </TouchableOpacity>
             </KeyboardAvoidingView>
             </View>
+            </View>
         )
     }
 }
@@ -67,7 +70,7 @@ const styles=StyleSheet.create(
            fontWeight:"bold",
            alignSelf:"center",
            marginTop:20,
-           marginBottom:20
+           
            
        },
        inputBox:{

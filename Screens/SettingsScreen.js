@@ -49,7 +49,7 @@ export default class SettingsScreen extends React.Component{
         return(
             <View>
                 <MyHeader/>
-                <TextInput 
+                            <TextInput 
                                 placeholder="First Name"
                                 style={styles.inputBox}
                                 value={this.state.firstName}

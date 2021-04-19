@@ -32,7 +32,9 @@ export default class BookDonateScreen extends React.Component{
                 title={item.bookName}
                 subtitle={item.reasonToRequest}
                 rightElement={
-                    <TouchableOpacity><Text>Donate</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={()=>{
+                        this.props.navigation.navigate("RecieverScreen",{"details":item})
+                    }}><Text style={styles.text}>Donate</Text></TouchableOpacity>
                 }
                 bottomDivider
             />
