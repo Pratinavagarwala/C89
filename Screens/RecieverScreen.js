@@ -72,8 +72,8 @@ export default class RecieverScreen extends React.Component{
     render(){
         return(
             <View>
-                <MyHeader/>
-                <Text style={styles.text}>Reciever Screen</Text>
+                <MyHeader title="User Details" navigation={this.props.navigation}/>
+                
                 <Card><Text>{this.state.recieverName}</Text></Card>
                 <Card><Text>{this.state.recieverContact}</Text></Card>
                 <Card><Text>{this.state.recieverAddress}</Text></Card>

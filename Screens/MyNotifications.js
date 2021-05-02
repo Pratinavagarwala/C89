@@ -42,7 +42,7 @@ export default class MyNotifications extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                <MyHeader/>
+                <MyHeader title="Notifications" navigation={this.props.navigation}/>
                 
                 {
                     this.state.allNotifications.length===0?(<Text style={styles.text}>Loading..</Text>):(

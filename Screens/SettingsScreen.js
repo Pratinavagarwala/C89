@@ -48,7 +48,7 @@ export default class SettingsScreen extends React.Component{
     render(){
         return(
             <View>
-                <MyHeader/>
+                <MyHeader title="Settings" navigation={this.props.navigation}/>
                             <TextInput 
                                 placeholder="First Name"
                                 style={styles.inputBox}

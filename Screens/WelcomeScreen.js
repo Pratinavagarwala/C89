@@ -156,7 +156,7 @@ export default class WelcomeScreen extends React.Component{
         return(
             <View style={styles.container}>
                 {this.showModal()}
-                <MyHeader/>
+                <MyHeader title="Login" navigation={this.props.navigation}/>
                 <TextInput 
                     style={styles.inputBox}
                     placeholder="EmailId"

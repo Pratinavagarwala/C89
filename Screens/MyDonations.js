@@ -92,8 +92,8 @@ export default class MyDonations extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                <MyHeader/>
-                <Text style={styles.text}>Donate Books with Others</Text>
+                <MyHeader title="Books Donated" navigation={this.props.navigation}/>
+                
                 {
                     this.state.allDonations.length===0?(<Text style={styles.text}>Loading..</Text>):(
                         <FlatList

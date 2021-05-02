@@ -33,7 +33,7 @@ export default class BookRequestScreen extends React.Component{
     render(){
         return(
             <View>
-                <MyHeader/>
+                <MyHeader title="Request Books" navigation={this.props.navigation}/>
             <View style={styles.container}>
                 
                 <Text style={styles.text}>Request Books from others</Text>
