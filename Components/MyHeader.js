@@ -2,6 +2,7 @@ import * as  React from "react";
 import { Header,Icon,Badge } from "react-native-elements";
 import {View} from "react-native" ;
 import db from "../config";
+import firebase from "firebase"
 class MyHeader extends React.Component {
    constructor(props){
        super(props)

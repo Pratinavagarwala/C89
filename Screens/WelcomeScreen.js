@@ -2,7 +2,7 @@ import * as  React from "react" ;
 import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,KeyboardAvoidingView} from "react-native";
 import firebase from "firebase";
 import db from "../config";
-import MyHeader from "../Components/MyHeader";
+import WelcomeHeader from "../Components/WelcomeHeader";
 
 export default class WelcomeScreen extends React.Component{
     constructor(){
@@ -156,7 +156,7 @@ export default class WelcomeScreen extends React.Component{
         return(
             <View style={styles.container}>
                 {this.showModal()}
-                <MyHeader title="Login" navigation={this.props.navigation}/>
+                <WelcomeHeader/>
                 <TextInput 
                     style={styles.inputBox}
                     placeholder="EmailId"
@@ -229,7 +229,8 @@ const styles=StyleSheet.create(
         borderWidth:1,
         width:"80%",
         height:80,
-        textAlign:"center"
+        textAlign:"center",
+        
        },
        button:{
         alignItems:"center",

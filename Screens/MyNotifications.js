@@ -1,9 +1,10 @@
 import * as  React from "react" ;
-import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,KeyboardAvoidingView,FlatList} from "react-native";
+import {View,Text,StyleSheet,FlatList} from "react-native";
 import firebase from "firebase";
 import db from "../config";
 import {ListItem} from 'react-native-elements';
 import MyHeader from "../Components/MyHeader";
+import SwipeableFlatlist from '../Components/SwipeableFlatlist';
 
 export default class MyNotifications extends React.Component{
     constructor(){
@@ -46,12 +47,8 @@ export default class MyNotifications extends React.Component{
                 
                 {
                     this.state.allNotifications.length===0?(<Text style={styles.text}>Loading..</Text>):(
-                        <FlatList
-                            keyExtractor={(item,index)=>index.toString()}
-                            data={this.state.allNotifications}
-                            renderItem={this.renderItem}
-                        />
-
+                        <SwipeableFlatlist allNotifications={this.state.allNotifications}/>
+                                                   
                     )
                 }
             </View>
