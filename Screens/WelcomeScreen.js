@@ -15,7 +15,8 @@ export default class WelcomeScreen extends React.Component{
             lastName:"",
             phoneNo:"",
             address:"",
-            confirmPassword:""
+            confirmPassword:"",
+            isBookRequestActive:false
         }
     }
     userLogin=(emailId,password)=>{
@@ -40,6 +41,7 @@ export default class WelcomeScreen extends React.Component{
                     phoneNo:this.state.phoneNo,
                     address:this.state.address,
                     emailId:this.state.emailId,
+                    isBookRequestActive:this.state.isBookRequestActive,
                 })
                 return Alert.alert("New user registered")
             }).catch((error)=>{
