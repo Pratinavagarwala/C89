@@ -42,13 +42,14 @@ export default class BookRequestScreen extends React.Component {
         db.collection("requestedBooks").where("userId", "==", this.state.userId).get().then(
             (snapshot) => {
                 snapshot.forEach(doc => {
-                    if (doc.date().bookStatus !== "received") {
+                    if (doc.data().bookStatus !== "received") {
                         this.setState({
                             requestId: doc.data().requestId,
                             requestedBookName: doc.data().bookName,
                             bookStatus: doc.data().bookStatus,
                             docId: doc.id
                         })
+                        
                     }
                 })
             }
@@ -62,6 +63,7 @@ export default class BookRequestScreen extends React.Component {
             (snapshot) => {
                 snapshot.forEach(doc => {
                     db.collection("users").doc(doc.id).update({ isBookRequestActive: false })
+                    this.setState({isBookRequestActive:false2})
                 })
             }
         )
@@ -70,7 +72,7 @@ export default class BookRequestScreen extends React.Component {
         db.collection("receivedBooks").add({
             userId:this.state.userId,
             requestId:this.state.requestId,
-            bookNme:bookName,
+            bookName:bookName,
             bookStatus:"received"
         })
     }
@@ -89,6 +91,7 @@ export default class BookRequestScreen extends React.Component {
             (snapshot) => {
                 snapshot.forEach(doc => {
                     db.collection("users").doc(doc.id).update({ isBookRequestActive: true })
+                    this.setState({isBookRequestActive:true})
                 })
             }
         )
@@ -125,7 +128,7 @@ export default class BookRequestScreen extends React.Component {
     render() {
         if (this.state.isBookRequestActive === true) {
             return (
-                <View>
+                <View style={{marginTop:50}}>
                     <Text>
                         {
                             this.state.requestedBookName
@@ -136,13 +139,13 @@ export default class BookRequestScreen extends React.Component {
                             this.state.bookStatus
                         }
                     </Text>
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity style={styles.button} onPress={()=>{
                         this.sendNotification()
                         this.updateBookRequestStatus()
                         this.recievedBooks(this.state.requestedBookName)
                         
                     }}>
-                        <Text>Book Recieved</Text>
+                        <Text style={styles.text}>Book Recieved</Text>
                     </TouchableOpacity>
                 </View>
             )

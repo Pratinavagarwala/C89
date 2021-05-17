@@ -2,10 +2,28 @@ import * as React from 'react';
 import {Text,StyleSheet,View,TouchableOpacity} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import firebase from  'firebase';
+import {Avatar} from 'react-native-elements';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions'
 export default class CustomSideBarMenu extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            image:"#",
+            userId:firebase.auth().currentUser.email,
+            name:"",
+            docId:""
+        }
+    }
+    selectPicture=async()=>{
+        const {cancelled,uri}=await ImagePicker.launchImageLibraryAsync({
+            
+        })
+    }
     render(){
         return(
             <View style={styles.container}>
+                <Avatar rounded size="large" showEditButton source={{uri:this.state.image}}/>
                 <View>
                     <DrawerItems {...this.props}/>
                 </View>

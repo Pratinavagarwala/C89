@@ -176,7 +176,7 @@ export default class WelcomeScreen extends React.Component{
                 <TextInput 
                     style={styles.inputBox}
                     placeholder="Password"
-                    keyboardType="numeric"
+                    
                     secureTextEntry={true}
                     onChangeText={(text)=>{
                         this.setState({
