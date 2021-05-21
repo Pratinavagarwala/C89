@@ -9,9 +9,16 @@ export default class SwipeableFlatlist extends React.Component{
         this.state={allNotifications:this.props.allNotifications}
     }
     updateMarkAsRead=(notification)=>{
-        db.collection("notifications").doc(notification.docId).update({
-            notificationStatus:"read"
+
+        db.collection("notifications").where("requestId","==",notification.requestId).where("donorId","==",notification.donorId).get()
+        .then((snapshot)=>{
+            snapshot.forEach((doc)=>{
+                db.collection("notifications").doc(doc.id).update({
+                    notificationStatus:"read"
+                })
+            })
         })
+        
     }
     onSwipeValueChange=(swipeData)=>{
         var allNotifications=this.state.allNotifications
@@ -40,7 +47,7 @@ export default class SwipeableFlatlist extends React.Component{
     renderHiddenItem=()=>{
         return(
             <View>
-                <Text>Mark as Read</Text>
+                <Text >Mark as Read</Text>
             </View>
         )
     }
@@ -53,10 +60,7 @@ export default class SwipeableFlatlist extends React.Component{
                     renderItem={this.renderItem}
                     renderHiddenItem={this.renderHiddenItem}
                     rightOpenValue={-Dimensions.get("window").width}
-                    previewRowKey={"0"}
-                    previewOpenValue={-40}
-                    previewOpenDelay={3000}
-                    onSwipeValueChange={this.onSwipeValueChange}
+                  onSwipeValueChange={this.onSwipeValueChange}
                     keyExtractor={(item,index)=> index.toString()}
                 />
 
