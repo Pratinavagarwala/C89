@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Modal, Scro
 import firebase from "firebase";
 import db from "../config";
 import MyHeader from "../Components/MyHeader";
-
+import { BookSearch } from "react-native-google-books";
+import { TouchableHighlight } from "react-native-gesture-handler";
 export default class BookRequestScreen extends React.Component {
     constructor() {
         super();
@@ -16,15 +17,18 @@ export default class BookRequestScreen extends React.Component {
             bookStatus: "",
             requestId: "",
             userDocId: "",
-            docId: ""
+            docId: "",
+            dataSource: "",
+            showFlatList: false
         }
     }
     createUniqueId() {
         return (Math.random().toString(36).substring(7))
     }
-    componentDidMount() {
+    componentDidMount = async () => {
         this.getBookRequest()
         this.getBookRequestActive()
+
     }
     getBookRequestActive() {
         db.collection("users").where("emailId", "==", this.state.userId).onSnapshot(
@@ -49,49 +53,51 @@ export default class BookRequestScreen extends React.Component {
                             bookStatus: doc.data().bookStatus,
                             docId: doc.id
                         })
-                        
+
                     }
                 })
             }
         )
     }
-    updateBookRequestStatus=()=>{
+    updateBookRequestStatus = () => {
         db.collection("requestedBooks").doc(this.state.docId).update({
-            bookStatus:"received"
+            bookStatus: "received"
         })
         db.collection("users").where("emailId", "==", this.state.userId).get().then(
             (snapshot) => {
                 snapshot.forEach(doc => {
                     db.collection("users").doc(doc.id).update({ isBookRequestActive: false })
-                    this.setState({isBookRequestActive:false2})
+                    this.setState({ isBookRequestActive: false2 })
                 })
             }
         )
     }
-    recievedBooks=(bookName)=>{
+    recievedBooks = (bookName) => {
         db.collection("receivedBooks").add({
-            userId:this.state.userId,
-            requestId:this.state.requestId,
-            bookName:bookName,
-            bookStatus:"received"
+            userId: this.state.userId,
+            requestId: this.state.requestId,
+            bookName: bookName,
+            bookStatus: "received"
         })
     }
     addRequest = async (bookName, reasonToRequest) => {
         var requestId = this.createUniqueId()
+        var books = await BookSearch.searchbook(bookName, "AIzaSyDhI_AC6-t8bLJN64YfO6wA-E3GQh2reaM")
         db.collection("requestedBooks").add({
             userId: this.state.userId,
             bookName: bookName,
             reasonToRequest: reasonToRequest,
             requestId: requestId,
             bookStatus: "requested",
-            data: firebase.firestore.FieldValue.serverTimestamp()
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            imageLink:books.data[0].volumeInfo.imageLinks.smallThumbnail
         })
         await this.getBookRequest()
         db.collection("users").where("emailId", "==", this.state.userId).get().then().then(
             (snapshot) => {
                 snapshot.forEach(doc => {
                     db.collection("users").doc(doc.id).update({ isBookRequestActive: true })
-                    this.setState({isBookRequestActive:true})
+                    this.setState({ isBookRequestActive: true })
                 })
             }
         )
@@ -101,34 +107,61 @@ export default class BookRequestScreen extends React.Component {
         })
         return Alert.alert("Request made")
     }
-    sendNotification=()=>{
+    sendNotification = () => {
         db.collection("users").where("emailId", "==", this.state.userId).get().then(
             (snapshot) => {
                 snapshot.forEach(doc => {
-                    var name=doc.data().firstName
-                    var lastName=doc.data().lastName
+                    var name = doc.data().firstName
+                    var lastName = doc.data().lastName
                     db.collection("notifications")
-                    .where("requestId","==",this.state.requestId).get.then(
-                        snapshot=>{
-                            snapshot.forEach(doc => {
-                                db.collection("notifications").add({
-                                    targetedUserId:doc.data().donorId,
-                                    message:name+" recieved the book"+ doc.data().bookName,
-                                    notificationStatus:"unread",
-                                    bookName:bookName
-                                    
+                        .where("requestId", "==", this.state.requestId).get.then(
+                            snapshot => {
+                                snapshot.forEach(doc => {
+                                    db.collection("notifications").add({
+                                        targetedUserId: doc.data().donorId,
+                                        message: name + " recieved the book" + doc.data().bookName,
+                                        notificationStatus: "unread",
+                                        bookName: bookName
+
+                                    })
                                 })
-                            })
-                        }
-                    )
+                            }
+                        )
                 })
             }
         )
     }
+    getBooksfromAPI = async (bookName) => {
+        if (bookName.length > 3) {
+            var books = await BookSearch.searchbook(bookName, "AIzaSyDhI_AC6-t8bLJN64YfO6wA-E3GQh2reaM")
+            this.setState({
+                dataSource: books.data,
+                showFlatList: true
+            })
+        }
+    }
+    renderItem = ({ item, index }) => {
+        return (
+            <TouchableHighlight
+                style={styles.button}
+                onPress={()=>{
+                    this.setState({
+                        bookName:item.volumeInfo.title,
+                        showFlatList:false,
+                    })
+                }}
+                
+                
+            >
+                <Text>{item.volumeInfo.title}</Text>
+            </TouchableHighlight>
+        )
+
+    }
     render() {
         if (this.state.isBookRequestActive === true) {
             return (
-                <View style={{marginTop:50}}>
+                <View style={styles.container}>
                     <Text>
                         {
                             this.state.requestedBookName
@@ -139,11 +172,11 @@ export default class BookRequestScreen extends React.Component {
                             this.state.bookStatus
                         }
                     </Text>
-                    <TouchableOpacity style={styles.button} onPress={()=>{
+                    <TouchableOpacity style={styles.button} onPress={() => {
                         this.sendNotification()
                         this.updateBookRequestStatus()
                         this.recievedBooks(this.state.requestedBookName)
-                        
+
                     }}>
                         <Text style={styles.text}>Book Recieved</Text>
                     </TouchableOpacity>
@@ -151,7 +184,8 @@ export default class BookRequestScreen extends React.Component {
             )
         } else {
             return (
-                <View>
+
+                <View style={styles.container}>
                     <MyHeader title="Request Books" navigation={this.props.navigation} />
                     <View style={styles.container}>
 
@@ -159,8 +193,11 @@ export default class BookRequestScreen extends React.Component {
                         <KeyboardAvoidingView>
                             <TextInput placeholder="Book name" style={styles.inputBox} value={this.state.bookName} onChangeText={(text) => {
                                 this.setState({ bookName: text })
+                                this.getBooksfromAPI(text)
                             }} />
-
+                            {
+                    this.state.showFlatList===false ? (
+                        <View>
                             <TextInput placeholder="Reason to request" style={[styles.inputBox]} value={this.state.reasonToRequest} onChangeText={(text) => {
                                 this.setState({ reasonToRequest: text })
                             }} multiline />
@@ -170,6 +207,17 @@ export default class BookRequestScreen extends React.Component {
                             }}>
                                 <Text style={styles.text}>Request Book</Text>
                             </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <FlatList
+                            keyExtractor={(item, index) => index.toString()}
+                            data={this.state.dataSource}
+                            renderItem={this.renderItem}
+                        />
+
+                    )
+                }
+                            
                         </KeyboardAvoidingView>
                     </View>
                 </View>
