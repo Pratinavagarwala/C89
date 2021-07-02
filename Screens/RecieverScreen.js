@@ -4,7 +4,7 @@ import MyHeader from '../Components/MyHeader';
 import firebase from 'firebase';
 import { Card } from 'react-native-elements';
 import db from '../config'
-import { add } from 'react-native-reanimated';
+import {RFValue} from "react-native-responsive-fontsize";
 export default class RecieverScreen extends React.Component{
     constructor(props){
         super(props)

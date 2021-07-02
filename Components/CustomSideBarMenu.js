@@ -4,7 +4,8 @@ import { DrawerItems } from 'react-navigation-drawer';
 import firebase from 'firebase';
 import { Avatar } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions'
+import * as Permissions from 'expo-permissions';
+import {RFValue} from "react-native-responsive-fontsize";
 export default class CustomSideBarMenu extends React.Component {
     constructor() {
         super();
@@ -86,36 +87,25 @@ const styles = StyleSheet.create(
     {
         container: {
 
-            marginTop: 100,
+            marginTop: RFValue(70),
 
         },
         text: {
-            fontSize: 20,
+            fontSize: RFValue(20),
             fontWeight: "bold",
             alignSelf: "center",
-            marginTop: 20,
-            marginBottom: 20
+            marginTop: RFValue(20),
+            marginBottom: RFValue(20)
 
-        },
-        inputBox: {
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 20,
-            alignSelf: "center",
-            borderWidth: 1,
-            width: "80%",
-            fontSize: 20,
-            textAlign: "center",
-            padding: 10,
         },
         button: {
             alignItems: "center",
             justifyContent: "center",
-            marginTop: 10,
-            padding: 10,
-            borderWidth: 1,
-            width: "50%",
-            height: 100,
+            marginTop: RFValue(10),
+            padding: RFValue(10),
+            borderWidth: RFValue(1),
+            
+            
             alignSelf: "center",
         }
 

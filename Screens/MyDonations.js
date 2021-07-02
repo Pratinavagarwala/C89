@@ -4,7 +4,7 @@ import firebase from "firebase";
 import db from "../config";
 import {ListItem} from 'react-native-elements';
 import MyHeader from "../Components/MyHeader";
-
+import {RFValue} from "react-native-responsive-fontsize";
 export default class MyDonations extends React.Component{
     constructor(){
         super()

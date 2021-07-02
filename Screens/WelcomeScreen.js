@@ -3,7 +3,7 @@ import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,K
 import firebase from "firebase";
 import db from "../config";
 import WelcomeHeader from "../Components/WelcomeHeader";
-
+import {RFValue} from "react-native-responsive-fontsize";
 export default class WelcomeScreen extends React.Component{
     constructor(){
         super();
@@ -210,14 +210,14 @@ const styles=StyleSheet.create(
            
         alignItems:"center",
            justifyContent:"center",
-           marginTop:2
+           marginTop:RFValue(20)
        },
        text:{
-        fontSize:20,
+        fontSize:RFValue(20),
         fontWeight:"bold",
         justifyContent:"center",
         textAlign:"center",
-        marginTop:10,
+        marginTop:RFValue(10),
         
         
                  
@@ -226,11 +226,11 @@ const styles=StyleSheet.create(
         
         justifyContent:"center",
         alignSelf:"center",
-        marginTop:20,
-        padding:10,
-        borderWidth:1,
+        marginTop:RFValue(20),
+        padding:RFValue(20),
+        borderWidth:RFValue(1),
         width:"80%",
-        height:80,
+        
         textAlign:"center",
         
        },
@@ -238,10 +238,10 @@ const styles=StyleSheet.create(
         alignItems:"center",
         justifyContent:"center",
         alignSelf:"center",
-        marginTop:20,
-        borderWidth:1,
+        marginTop:RFValue(20),
+        borderWidth:RFValue(1),
         width:"60%",
-        height:50,
+        
        }
 
     }

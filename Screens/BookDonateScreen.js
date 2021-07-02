@@ -4,7 +4,7 @@ import firebase from "firebase";
 import db from "../config";
 import { ListItem } from 'react-native-elements';
 import MyHeader from "../Components/MyHeader";
-
+import {RFValue} from "react-native-responsive-fontsize";
 export default class BookDonateScreen extends React.Component {
     constructor() {
         super()
@@ -38,7 +38,7 @@ export default class BookDonateScreen extends React.Component {
                 }
                 leftElement={
                     <Image
-                        style={{ height: 50, width: 50, borderWidth: 5, borderColor: "black" }}
+                        style={{ height: 150, width: 100, borderWidth: 5, borderColor: "black" }}
                         source={{uri:item.imageLink}}
                     />
                 }
@@ -51,7 +51,7 @@ export default class BookDonateScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <MyHeader title="Donate Books" navigation={this.props.navigation} />
-                <Text style={styles.text}>Donate Books with Others</Text>
+                
                 {
                     this.state.requestedBookList.length === 0 ? (<Text style={styles.text}>Loading..</Text>) : (
                         <FlatList
@@ -95,10 +95,9 @@ const styles = StyleSheet.create(
             alignItems: "center",
             justifyContent: "center",
             marginTop: 10,
-            padding: 10,
+            padding: 5,
             borderWidth: 1,
-            width: "50%",
-            height: 100,
+                        
         }
 
     }

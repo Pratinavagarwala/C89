@@ -3,7 +3,7 @@ import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Modal,ScrollView,K
 import firebase from "firebase";
 import db from "../config";
 import MyHeader from "../Components/MyHeader";
-
+import {RFValue} from "react-native-responsive-fontsize";
 export default class SettingsScreen extends React.Component{
     constructor(){
         super()
@@ -102,10 +102,10 @@ const styles=StyleSheet.create(
            
         alignItems:"center",
            justifyContent:"center",
-           marginTop:100,
+           marginTop:RFValue(20),
        },
        text:{
-        fontSize:20,
+        fontSize:RFValue(30),
         fontWeight:"bold",
         justifyContent:"center",
         textAlign:"center"
@@ -116,20 +116,20 @@ const styles=StyleSheet.create(
         alignItems:"center",
         justifyContent:"center",
         alignSelf:"center",
-        marginTop:20,
-        padding:10,
+        marginTop:RFValue(30),
+        padding:RFValue(10),
         borderWidth:1,
         width:"80%",
-        height:80,
+        
        },
        button:{
         alignItems:"center",
         justifyContent:"center",
         alignSelf:"center",
-        marginTop:20,
+        marginTop:RFValue(30),
         borderWidth:1,
         width:"60%",
-        height:50,
+        
        }
 
     }

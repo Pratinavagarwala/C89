@@ -5,7 +5,7 @@ import db from "../config";
 import {ListItem} from 'react-native-elements';
 import MyHeader from "../Components/MyHeader";
 import SwipeableFlatlist from '../Components/SwipeableFlatlist';
-
+import {RFValue} from "react-native-responsive-fontsize";
 export default class MyNotifications extends React.Component{
     constructor(){
         super()

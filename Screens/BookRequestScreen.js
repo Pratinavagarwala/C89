@@ -1,10 +1,11 @@
 import * as  React from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Modal, ScrollView, KeyboardAvoidingView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert,FlatList, Modal, ScrollView, KeyboardAvoidingView } from "react-native";
 import firebase from "firebase";
 import db from "../config";
 import MyHeader from "../Components/MyHeader";
 import { BookSearch } from "react-native-google-books";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import {RFValue} from "react-native-responsive-fontsize";
 export default class BookRequestScreen extends React.Component {
     constructor() {
         super();
@@ -90,7 +91,7 @@ export default class BookRequestScreen extends React.Component {
             requestId: requestId,
             bookStatus: "requested",
             date: firebase.firestore.FieldValue.serverTimestamp(),
-            imageLink:books.data[0].volumeInfo.imageLinks.smallThumbnail
+            imageLink: books.data[0].volumeInfo.imageLinks.smallThumbnail
         })
         await this.getBookRequest()
         db.collection("users").where("emailId", "==", this.state.userId).get().then().then(
@@ -144,14 +145,14 @@ export default class BookRequestScreen extends React.Component {
         return (
             <TouchableHighlight
                 style={styles.button}
-                onPress={()=>{
+                onPress={() => {
                     this.setState({
-                        bookName:item.volumeInfo.title,
-                        showFlatList:false,
+                        bookName: item.volumeInfo.title,
+                        showFlatList: false,
                     })
                 }}
-                
-                
+
+
             >
                 <Text>{item.volumeInfo.title}</Text>
             </TouchableHighlight>
@@ -196,28 +197,28 @@ export default class BookRequestScreen extends React.Component {
                                 this.getBooksfromAPI(text)
                             }} />
                             {
-                    this.state.showFlatList===false ? (
-                        <View>
-                            <TextInput placeholder="Reason to request" style={[styles.inputBox]} value={this.state.reasonToRequest} onChangeText={(text) => {
-                                this.setState({ reasonToRequest: text })
-                            }} multiline />
+                                this.state.showFlatList === false ? (
+                                    <View>
+                                        <TextInput placeholder="Reason to request" style={[styles.inputBox]} value={this.state.reasonToRequest} onChangeText={(text) => {
+                                            this.setState({ reasonToRequest: text })
+                                        }} multiline />
 
-                            <TouchableOpacity style={styles.button} onPress={() => {
-                                this.addRequest(this.state.bookName, this.state.reasonToRequest);
-                            }}>
-                                <Text style={styles.text}>Request Book</Text>
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <FlatList
-                            keyExtractor={(item, index) => index.toString()}
-                            data={this.state.dataSource}
-                            renderItem={this.renderItem}
-                        />
+                                        <TouchableOpacity style={styles.button} onPress={() => {
+                                            this.addRequest(this.state.bookName, this.state.reasonToRequest);
+                                        }}>
+                                            <Text style={styles.text}>Request Book</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                ) : (
+                                    <FlatList
+                                        keyExtractor={(item, index) => index.toString()}
+                                        data={this.state.dataSource}
+                                        renderItem={this.renderItem}
+                                    />
 
-                    )
-                }
-                            
+                                )
+                            }
+
                         </KeyboardAvoidingView>
                     </View>
                 </View>
